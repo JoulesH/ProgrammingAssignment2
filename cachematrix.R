@@ -1,24 +1,25 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## makeCacheMatrix produces a "matrix" with a series of functions that allow users to:
+## 1. set a matrix
+## 2. get a matrix (as in retrieve)
+## 3. set the inverse of the matrix
+## 4. get the inverse of the matrix
 
 makeCacheMatrix <- function(x = matrix()) {
   inv_matrix <- NULL 
   
-  ## set the matrix as an environment variable
+  ## set the matrix
   set <- function(y) {
     x <<- y
     inv_matrix <<- NULL ## the matrix has changed, so reset this to NULL
   }
   
-  ## retrieving the cached matrix
+  ## returns the matrix
   get <- function() x
   
-  ## sets the inverse of the matrix
+  ## sets the inverse matrix
   set_inverse <- function(inverse) inv_matrix <<- inverse
   
-  ## returns the matrix
+  ## returns the inverse matrix
   get_inverse <- function() inv_matrix
   
   ## shows the list of possible internal function calls
@@ -28,20 +29,24 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
 ## Return a matrix that is the inverse of 'x'
+## First this will check to see if the inverse matrix has
+## already been cached. If it has, then it returns the cached
+## inverse matrix. If it has not, then it will compute the inverse
+## matrix and cache it.
 
 cacheSolve <- function(x, ...) {
   inv_matrix <- x$get_inverse()
   if(!is.null(inv_matrix)) {
-    message("getting cached data")
+    message("getting cached inverse matrix")
     return(inv_matrix)
   }
   
-  # grab the cached matrix and find its inverse below
+  ## The inverse matrix was not already cached, so
+  ## grab the cached matrix and find its inverse below
   data <- x$get()
   
-  # since we haven't computed it yet, solve for the inverse matrix
+  # solve for the inverse matrix
   inv_matrix <- solve(data, ...)
   
   # cache the inverse
